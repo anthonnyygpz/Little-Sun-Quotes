@@ -9,6 +9,7 @@ from .backend.app.routers import (
     budgets,
     clients,
     quotes,
+    quote_designs,
 )
 from fastapi.middleware.cors import CORSMiddleware
 from .pages.index import index
@@ -32,6 +33,7 @@ app.api.include_router(nail_sizes.router)
 app.api.include_router(budgets.router)
 app.api.include_router(clients.router)
 app.api.include_router(quotes.router)
+app.api.include_router(quote_designs.router)
 
 # Routers reflex
 app.add_page(index, route="/")
