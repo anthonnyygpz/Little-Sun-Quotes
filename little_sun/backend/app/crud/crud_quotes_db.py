@@ -19,9 +19,3 @@ class QuotesDB:
             return db_query
         except Exception as e:
             raise HTTPException(status_code=500, detail=str(e))
-
-    def create_quotes_designs_db(self):
-        try:
-            pass
-        except Exception as e:
-            raise HTTPException(status_code=500, detail=str(e))
