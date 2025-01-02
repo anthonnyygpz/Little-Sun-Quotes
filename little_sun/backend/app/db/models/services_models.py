@@ -1,5 +1,6 @@
-from sqlalchemy import Column, Integer, String
-from little_sun.backend.app.db.database import Base
+from sqlalchemy import Column, String, Integer
+from sqlalchemy.orm import relationship
+from ..database import Base
 
 
 class Services(Base):
@@ -11,3 +12,7 @@ class Services(Base):
     service_name = Column(String(), nullable=False)
     description = Column(String(), nullable=True)
     price = Column(Integer(), nullable=False)
+
+    quotes = relationship(
+        "Quotes", secondary="quote_services", back_populates="services"
+    )

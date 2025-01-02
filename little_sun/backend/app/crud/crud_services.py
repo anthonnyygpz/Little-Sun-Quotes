@@ -3,11 +3,11 @@ from dataclasses import dataclass
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
-from ..db.models.nail_services_model import Services
+from ..db.models.services_models import Services
 
 
 @dataclass
-class NailServicesDB:
+class ServicesDB:
     db: Session
 
     def get_nail_services_db(self):

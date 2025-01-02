@@ -1,5 +1,6 @@
 from sqlalchemy import Column, DateTime, Integer, String, func
 from ..database import Base
+from sqlalchemy.orm import relationship
 
 
 class Clients(Base):
@@ -13,3 +14,4 @@ class Clients(Base):
     created_at = Column(
         DateTime(timezone=True), nullable=False, default=func.now()
     )
+    quotes = relationship("Quotes", back_populates="client")

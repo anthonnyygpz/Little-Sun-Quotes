@@ -76,5 +76,4 @@ class State(rx.State):
             if i["category"] == "design":
                 await self.create_quote_design(i["id"])
             if i["category"] == "service":
-                pass
                 await self.create_quote_service(i["id"])

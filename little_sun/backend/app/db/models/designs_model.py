@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String
+from sqlalchemy.orm import relationship
 from ..database import Base
 
 
@@ -11,3 +12,7 @@ class Designs(Base):
     design_name = Column(String(), nullable=False)
     description = Column(String(), nullable=True)
     price = Column(Integer(), nullable=False)
+
+    quotes = relationship(
+        "Quotes", secondary="quote_designs", back_populates="designs"
+    )

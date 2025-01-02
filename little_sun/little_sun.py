@@ -3,7 +3,7 @@
 import reflex as rx
 
 from .backend.app.routers import (
-    nail_services,
+    services,
     designs,
     nail_sizes,
     budgets,
@@ -13,11 +13,20 @@ from .backend.app.routers import (
     quote_services,
 )
 from fastapi.middleware.cors import CORSMiddleware
-from .pages.index import index
 from .test.test import test
+from .pages.index import index
+from .pages.crud_dashboard import crud_dashboard
 
 # Initalization
-app = rx.App()
+app = rx.App(
+    theme=rx.theme(
+        appearance="dark",
+        has_background=True,
+        radius="large",
+        accent_color="grass",
+    ),
+)
+
 
 app.api.add_middleware(
     CORSMiddleware,
@@ -28,7 +37,7 @@ app.api.add_middleware(
 )
 
 # APIs
-app.api.include_router(nail_services.router)
+app.api.include_router(services.router)
 app.api.include_router(designs.router)
 app.api.include_router(nail_sizes.router)
 app.api.include_router(budgets.router)
@@ -39,4 +48,5 @@ app.api.include_router(quote_services.router)
 
 # Routers reflex
 app.add_page(index, route="/")
+app.add_page(crud_dashboard, route="/dashboard")
 app.add_page(test, route="/test")

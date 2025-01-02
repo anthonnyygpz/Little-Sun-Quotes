@@ -7,10 +7,10 @@ from little_sun.states.nail_services import NailServices, NailServicesAPI
 from little_sun.states.nail_sizes import NailSizes, NailSizesAPI
 
 
-from little_sun.componets.buttons import *
-from ..componets.forms import *
-from ..componets.labels import *
-from ..componets.pricing import *
+from little_sun.components.buttons import *
+from ..components.forms import *
+from ..components.labels import *
+from ..components.pricing import *
 
 
 def create_client_information_section():

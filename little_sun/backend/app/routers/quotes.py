@@ -12,7 +12,10 @@ router = APIRouter(
 
 
 @router.post("/create_quotes")
-async def create_quotes(
-    quote: CreateQuotesSchema, db: Session = Depends(get_db)
-):
+def create_quotes(quote: CreateQuotesSchema, db: Session = Depends(get_db)):
     return QuotesRepositories(db).create_quotes_repositories(quote)
+
+
+@router.get("/get_quotes_data")
+def get_quote_data(db: Session = Depends(get_db)):
+    return QuotesRepositories(db).get_quote_data_repositories()
