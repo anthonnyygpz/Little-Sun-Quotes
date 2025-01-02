@@ -2,8 +2,8 @@ from sqlalchemy import Column, Integer
 from ..database import Base
 
 
-class QuoteDesigns(Base):
-    __tablename__ = "quote_designs"
+class QuoteServices(Base):
+    __tablename__ = "quote_services"
 
     quote_id = Column(Integer(), nullable=False, primary_key=True)
-    design_id = Column(Integer(), nullable=False)
+    service_id = Column(Integer(), nullable=False)

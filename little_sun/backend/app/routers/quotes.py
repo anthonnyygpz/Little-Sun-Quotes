@@ -16,8 +16,3 @@ async def create_quotes(
     quote: CreateQuotesSchema, db: Session = Depends(get_db)
 ):
     return QuotesRepositories(db).create_quotes_repositories(quote)
-
-
-@router.post("/create_quotes_designs")
-async def create_quotes_designs(db: Session = Depends(get_db)):
-    return QuotesRepositories(db).create_quotes_designs_repositories()

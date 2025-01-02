@@ -1,21 +1,25 @@
 from dataclasses import dataclass
-
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
-from ..db.models.quote_designs_model import QuoteDesigns
-from ..schemas.quote_designs_schemas import CreateQuoteDesignsSchema
+
+from ..db.models.quote_services_model import QuoteServices
+
+from ..schemas.quote_services_schema import CreateQuoteServicesSchema
 
 
 @dataclass
-class QuoteDeginsDB:
+class QuoteServicesDB:
     db: Session
 
-    def create_quote_designs_db(self, quote_designs: CreateQuoteDesignsSchema):
+    def create_quote_services_db(
+        self, quote_services: CreateQuoteServicesSchema
+    ):
         try:
-            db_query = QuoteDesigns(**quote_designs.model_dump())
+            db_query = QuoteServices(**quote_services.model_dump())
             self.db.add(db_query)
             self.db.commit()
             self.db.refresh(db_query)
             return db_query
         except Exception as e:
+            self.db.rollback()
             raise HTTPException(status_code=500, detail=str(e))

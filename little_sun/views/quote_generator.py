@@ -211,7 +211,7 @@ def create_designs_selection_section(items, text):
                                 checkbox_id=f"{item.design_id}",
                                 checkbox_name=f"{item.design_name}",
                                 price=item.price,
-                                category="service",
+                                category="design",
                             ),
                             create_price_span(price_text=f"${item.price}"),
                             display="flex",
@@ -264,7 +264,7 @@ def create_quote_summary_section():
             #     font_weight="600",
             #     justify_content="space-between",
             # ),
-            on_mount=[NailSizes.on_mount, NailServices.on_mount],  # type: ignore
+            on_mount=[NailSizes.on_mount, NailServices.on_mount, State.on_mount],  # type: ignore
             display="flex",
             flex_direction="column",
             gap="0.5rem",

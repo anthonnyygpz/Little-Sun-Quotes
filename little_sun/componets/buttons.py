@@ -49,10 +49,11 @@ def create_generate_quote_button():
         on_click=lambda: [
             State.upload_data(
                 {
-                    "size": NailSizes.type_escultural,
+                    "size": NailSizes.id_type_escultural,
                     "service": NailServices.items,
                     "name_client": InfoClientState.name_client,
                     "phone_number": InfoClientState.phone_number,
+                    "total_price": NailServices.total_price,
                 }
             ),
         ],

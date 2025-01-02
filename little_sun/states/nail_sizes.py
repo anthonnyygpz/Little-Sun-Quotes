@@ -25,6 +25,7 @@ class NailSizesAPI(rx.State):
 
 class NailSizes(rx.State):
     type_escultural: str = ""
+    id_type_escultural: int = 0
 
     def on_mount(self):
         self.type_escultural = ""
@@ -32,6 +33,7 @@ class NailSizes(rx.State):
     @rx.event
     def add_type_escultural(self, item):
         self.type_escultural = item["size_name"]
+        self.id_type_escultural = item["size_id"]
 
     @rx.event
     def delete(self):

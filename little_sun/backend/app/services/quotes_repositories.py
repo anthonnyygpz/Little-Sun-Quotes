@@ -15,9 +15,3 @@ class QuotesRepositories:
             return QuotesDB(self.db).create_quotes_db(quote)
         except Exception as e:
             raise HTTPException(status_code=400, detail=str(e))
-
-    def create_quotes_designs_repositories(self):
-        try:
-            return QuotesDB(self.db).create_quotes_designs_db()
-        except Exception as e:
-            raise HTTPException(status_code=400, detail=str(e))
