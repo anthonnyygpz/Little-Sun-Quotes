@@ -45,6 +45,7 @@ class QuotesDB:
                         "designs"
                     ),
                     Quotes.total_amount,
+                    Quotes.status,
                     Quotes.created_at,
                 )
                 .join(Clients, Quotes.client_id == Clients.client_id)
@@ -53,7 +54,7 @@ class QuotesDB:
                 .join(Services, QuoteServices.service_id == Services.service_id)
                 .join(QuoteDesigns, Quotes.quote_id == QuoteDesigns.quote_id)
                 .join(Designs, QuoteDesigns.design_id == Designs.design_id)
-                .filter(Quotes.status == "pending")
+                # .filter(Quotes.status == "pending")
                 .group_by(Quotes.quote_id)
                 .order_by(Quotes.created_at.desc())
                 .all()
@@ -68,9 +69,11 @@ class QuotesDB:
                     "quote_id": query.quote_id,
                     "name": query.client_name,
                     "size_name": query.size_name,
-                    "services": [query.services],
-                    "designs": [query.designs],
+                    "phone": query.phone_number,
+                    "services": query.services,
+                    "designs": query.designs,
                     "total_amount": query.total_amount,
+                    "status": query.status,
                     "created_at": query.created_at,
                 }
                 for query in db_query
@@ -84,3 +87,24 @@ class QuotesDB:
                 status_code=500,
                 detail=f"An unexpected error occurred: {str(e)}",
             )
+
+    def update_quotes_db(self):
+        try:
+            pass
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=str(e))
+
+    def delete_quote_db(self, quote_id: int):
+        try:
+            db_query = (
+                self.db.query(Quotes)
+                .filter(Quotes.quote_id == quote_id)
+                .first()
+            )
+            self.db.delete(db_query)
+            self.db.commit()
+            return {"message": "Se elimino correctamente"}
+
+        except Exception as e:
+            self.db.rollback()
+            raise HTTPException(status_code=500, detail=str(e))

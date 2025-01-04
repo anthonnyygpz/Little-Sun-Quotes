@@ -41,3 +41,25 @@ class APIClient:
                 return response.json()
         except Exception as e:
             print(f"Error fetching data: {str(e)}")
+
+    async def get_data(self, endpoint):
+        try:
+            async with httpx.AsyncClient() as client:
+                response = await client.get(
+                    f"http://0.0.0.0:8000/api/{endpoint}",
+                )
+                response.raise_for_status()
+                return response.json()
+        except Exception as e:
+            print(f"Error fetching data: {str(e)}")
+
+    async def delete_data(self, endpoint):
+        try:
+            async with httpx.AsyncClient() as client:
+                response = await client.delete(
+                    f"http://0.0.0.0:8000/api/{endpoint}",
+                )
+                response.raise_for_status()
+                return response.json()
+        except Exception as e:
+            print(f"Error fetching data: {str(e)}")

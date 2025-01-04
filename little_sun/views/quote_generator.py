@@ -292,6 +292,13 @@ def quote_generator_view():
             margin_bottom="2rem",
             text_align="center",
         ),
+        rx.box(
+            rx.icon_button(
+                "circle-arrow-left",
+                color_scheme="purple",
+                on_click=rx.redirect("http://localhost:3000/"),
+            ),
+        ),
         create_client_information_section(),
         create_nail_sizes_selection_section(
             items=NailSizesAPI,
@@ -307,7 +314,7 @@ def quote_generator_view():
         ),
         create_quote_summary_section(),
         rx.flex(
-            create_generate_quote_button(),
+            generate_quote_button(),
             create_clean_quote_button(),
             display="flex",
             justify_content="space-between",

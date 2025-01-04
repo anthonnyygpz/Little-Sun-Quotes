@@ -21,3 +21,15 @@ class QuotesRepositories:
             return QuotesDB(self.db).get_quote_data_db()
         except Exception as e:
             raise HTTPException(status_code=400, detail=str(e))
+
+    def update_quotes_repositories(self):
+        try:
+            return QuotesDB(self.db).update_quotes_db()
+        except Exception as e:
+            raise HTTPException(status_code=400, detail=str(e))
+
+    def delete_quote_repositories(self, quote_id: int):
+        try:
+            return QuotesDB(self.db).delete_quote_db(quote_id)
+        except Exception as e:
+            raise HTTPException(status_code=400, detail=str(e))

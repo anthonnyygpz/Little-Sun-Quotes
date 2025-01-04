@@ -42,12 +42,12 @@ class State(rx.State):
     sort_value: str = ""
     sort_reverse: bool = False
     search_value: str = ""
-    current_user: Customer = Customer()
+    current_user: Customer = Customer()  # type: ignore
     # Values for current and previous month
     current_month_values: MonthValues = MonthValues()
     previous_month_values: MonthValues = MonthValues()
 
-    def load_entries(self) -> list[Customer]:
+    def load_entries(self) -> list[Customer]:  # type: ignore
         """Get all users from the database."""
         with rx.session() as session:
             query = select(Customer)

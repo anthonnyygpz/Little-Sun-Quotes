@@ -28,7 +28,7 @@ def create_button(text, on_clicked):
     )
 
 
-def create_generate_quote_button():
+def generate_quote_button():
     """Create a button for generating a quote."""
     return rx.el.button(
         " Generar cita ",
@@ -56,6 +56,7 @@ def create_generate_quote_button():
                     "total_price": NailServices.total_price,
                 }
             ),
+            rx.redirect("http://localhost:3000/"),
         ],
     )
 

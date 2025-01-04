@@ -1,5 +1,4 @@
 import reflex as rx
-from ..components.stats_card import stats_cards_group
 from ..views.navbar import navbar
 from ..views.table import main_table
 
@@ -7,7 +6,8 @@ from ..views.table import main_table
 def crud_dashboard() -> rx.Component:
     return rx.vstack(
         navbar(),
-        stats_cards_group(),
+        # Usar luego
+        # stats_cards_group(),
         rx.box(
             main_table(),
             width="100%",

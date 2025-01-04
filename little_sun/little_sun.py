@@ -47,6 +47,6 @@ app.api.include_router(quote_designs.router)
 app.api.include_router(quote_services.router)
 
 # Routers reflex
-app.add_page(index, route="/")
-app.add_page(crud_dashboard, route="/dashboard")
+app.add_page(index, route="/quote")
+app.add_page(crud_dashboard, route="/")
 app.add_page(test, route="/test")
