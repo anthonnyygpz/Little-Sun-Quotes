@@ -1,6 +1,7 @@
 import reflex as rx
 
 from little_sun.states.crud_dashboard import CRUDDashboard
+from little_sun.utils.constants import Colors
 
 from ..backend.backend import State
 from ..components.form_field import form_field
@@ -51,7 +52,7 @@ def add_client_button() -> rx.Component:
         rx.icon("plus", size=26),
         rx.text("Agregar cliente", size="4", display=["none", "none", "block"]),
         on_click=rx.redirect("http://localhost:3000/quote/"),
-        bg="#7C3AED",
+        bg=Colors.purple,
         size="3",
     )
 

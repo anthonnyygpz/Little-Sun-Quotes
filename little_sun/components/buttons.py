@@ -2,6 +2,7 @@ import reflex as rx
 
 from little_sun.states.nail_services import NailServices
 from little_sun.states.nail_sizes import NailSizes
+from little_sun.utils.constants import Colors
 from ..states.info_client import InfoClientState
 
 from little_sun.states.state import State
@@ -10,14 +11,14 @@ from little_sun.states.state import State
 def create_button(text, on_clicked):
     return rx.el.button(
         text,
-        background_color="#7C3AED",
+        background_color=Colors.purple,
         _focus={
             "outline-style": "none",
             "box-shadow": "var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color)",
             "--ring-opacity": "0.5",
-            "--ring-color": "#7C3AED",
+            "--ring-color": Colors.purple,
         },
-        _hover={"background-color": "#6D28D9"},
+        _hover={"background-color": Colors.purple},
         padding_left="1.5rem",
         padding_right="1.5rem",
         padding_top="0.5rem",
@@ -32,14 +33,14 @@ def generate_quote_button():
     """Create a button for generating a quote."""
     return rx.el.button(
         " Generar cita ",
-        background_color="#7C3AED",
+        background_color=Colors.purple,
         _focus={
             "outline-style": "none",
             "box-shadow": "var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color)",
             "--ring-opacity": "0.5",
-            "--ring-color": "#7C3AED",
+            "--ring-color": Colors.purple,
         },
-        _hover={"background-color": "#6D28D9"},
+        _hover={"background-color": Colors.purple},
         padding_left="1.5rem",
         padding_right="1.5rem",
         padding_top="0.5rem",
@@ -113,14 +114,14 @@ def create_view_saved_quotes_button():
             height="1.5rem",
             width="1.5rem",
         ),
-        background_color="#7C3AED",
+        background_color=Colors.purple,
         _focus={
             "outline-style": "none",
             "box-shadow": "var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color)",
             "--ring-opacity": "0.5",
-            "--ring-color": "#7C3AED",
+            "--ring-color": Colors.purple,
         },
-        _hover={"background-color": "#6D28D9"},
+        _hover={"background-color": Colors.purple},
         padding="1rem",
         border_radius="9999px",
         box_shadow="0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",

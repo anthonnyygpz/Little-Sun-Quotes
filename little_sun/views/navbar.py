@@ -1,12 +1,16 @@
 import reflex as rx
 
+from little_sun.utils.constants import Colors
+
 
 def navbar():
     return rx.flex(
         rx.badge(
-            rx.icon(tag="table-2", size=28),
-            rx.heading("Little Sun App", size="6"),
-            color_scheme="purple",
+            rx.icon(tag="table-2", size=28, color=Colors.purple),
+            rx.heading("Little Sun App", size="6", color=Colors.purple),
+            border="0.2em solid",
+            border_color=Colors.purple,
+            bg=Colors.purple_degraded,
             radius="large",
             align="center",
             variant="surface",

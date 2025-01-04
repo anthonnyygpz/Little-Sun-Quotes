@@ -1,5 +1,7 @@
 import reflex as rx
 
+from little_sun.utils.constants import Colors
+
 from ..states.nail_services import NailServices
 
 
@@ -14,7 +16,7 @@ def create_input(input_id, input_name, input_type, on_blur, text_value):
         _focus={
             "outline-style": "none",
             "box-shadow": "var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color)",
-            "--ring-color": "#7C3AED",
+            "--ring-color": Colors.purple,
         },
         padding_left="0.75rem",
         padding_right="0.75rem",
@@ -41,6 +43,7 @@ def create_checkbox(checkbox_id, checkbox_name, price, category):
                 ),
             ],
             variant="surface",
+            color_scheme="purple",
             default_checked=False,
         ),
     )

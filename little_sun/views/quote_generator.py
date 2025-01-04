@@ -8,6 +8,7 @@ from little_sun.states.nail_sizes import NailSizes, NailSizesAPI
 
 
 from little_sun.components.buttons import *
+from little_sun.utils.constants import Colors
 from ..components.forms import *
 from ..components.labels import *
 from ..components.pricing import *
@@ -113,7 +114,7 @@ def create_nail_sizes_selection_section(items, text):
                 rx.spinner(),
                 rx.cond(
                     items.error != "",
-                    rx.text(items.error, color="red"),
+                    rx.text(items.error, color=Colors.error),
                     rx.foreach(
                         items.data,
                         lambda item: rx.button(
@@ -123,13 +124,13 @@ def create_nail_sizes_selection_section(items, text):
                             ),
                             bg=rx.cond(
                                 NailSizes.type_escultural == item.size_name,
-                                "#7C3AED",
-                                "#f1f1f1",
+                                Colors.purple,
+                                Colors.white,
                             ),
                             color=rx.cond(
                                 NailSizes.type_escultural == item.size_name,
-                                "white",
-                                "black",
+                                Colors.white,
+                                Colors.black,
                             ),
                             margin="0.5em",
                             padding="1em",
@@ -163,7 +164,7 @@ def create_services_selection_section(items, mount, text):
                 rx.spinner(),
                 rx.cond(
                     items.error != "",
-                    rx.text(items.error, color="red"),
+                    rx.text(items.error, color=Colors.error),
                     rx.foreach(
                         items.data,
                         lambda item: rx.flex(
@@ -203,7 +204,7 @@ def create_designs_selection_section(items, text):
                 rx.spinner(),
                 rx.cond(
                     items.error != "",
-                    rx.text(items.error, color="red"),
+                    rx.text(items.error, color=Colors.error),
                     rx.foreach(
                         items.data,
                         lambda item: rx.flex(
@@ -286,7 +287,7 @@ def quote_generator_view():
                 font_weight="700",
                 font_size="1.875rem",
                 line_height="2.25rem",
-                color="#7C3AED",
+                color=Colors.purple,
                 as_="h1",
             ),
             margin_bottom="2rem",
@@ -295,7 +296,7 @@ def quote_generator_view():
         rx.box(
             rx.icon_button(
                 "circle-arrow-left",
-                color_scheme="purple",
+                bg=Colors.purple,
                 on_click=rx.redirect("http://localhost:3000/"),
             ),
         ),
