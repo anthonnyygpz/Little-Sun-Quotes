@@ -25,7 +25,7 @@ from ..states.nail_sizes import NailSizes
 from ..utils.constants import Colors
 
 
-def index() -> rx.Component:
+def quote_generator() -> rx.Component:
     """Main page of the application."""
     return base_template(
         rx.box(

@@ -2,6 +2,8 @@
 
 import reflex as rx
 
+from little_sun.pages.quote_generator import quote_generator
+
 from .backend.app.routers import (
     services,
     designs,
@@ -14,7 +16,6 @@ from .backend.app.routers import (
 )
 from fastapi.middleware.cors import CORSMiddleware
 from .test.test import test
-from .pages.index import index
 from .pages.crud_dashboard import crud_dashboard
 
 # Initalization
@@ -47,6 +48,6 @@ app.api.include_router(quote_designs.router)
 app.api.include_router(quote_services.router)
 
 # Routers reflex
-app.add_page(index, route="/quote")
+app.add_page(quote_generator, route="/quote")
 app.add_page(crud_dashboard, route="/")
 app.add_page(test, route="/test")
