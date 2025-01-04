@@ -3,10 +3,10 @@ import reflex as rx
 from little_sun.states.crud_dashboard import CRUDDashboard
 from little_sun.utils.constants import Colors
 
-from ..backend.backend import State
-from ..components.form_field import form_field
+from ...backend.backend import State
+from ...components.form_field import form_field
 
-from ..components.status_badges import status_badge
+from ...components.status_badges import status_badge
 
 
 def show_client(user):

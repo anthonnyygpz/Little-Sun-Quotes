@@ -11,6 +11,10 @@ class InfoClientState(rx.State):
         self.phone_number = ""
         self.register_or_exist = False
 
+    def switch(self):
+        self.name_client = ""
+        self.phone_number = ""
+
     @rx.event
     def change_cheked(self, is_checked: bool):
         self.register_or_exist = is_checked

@@ -1,6 +1,6 @@
 import reflex as rx
-from ..views.navbar import navbar
-from ..views.table import main_table
+from ..views.navbar.navbar import navbar
+from ..views.table.table import main_table
 
 
 def crud_dashboard() -> rx.Component:
