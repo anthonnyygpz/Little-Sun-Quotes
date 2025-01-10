@@ -7,19 +7,19 @@ from ...components.labels import create_heading
 from ...components.pricing import create_price_span
 
 
-def designs_selection_section(items, text):
+def designs_selection_section(state_designs, label_text):
     """Create the services selection section of the form."""
     return rx.box(
-        create_heading(text),
+        create_heading(label_text),
         rx.box(
             rx.cond(
-                items.loading == True,
+                state_designs.loading,
                 rx.spinner(),
                 rx.cond(
-                    items.error != "",
-                    rx.text(items.error, color=Colors.error),
+                    state_designs.error != "",
+                    rx.text(state_designs.error, color=Colors.error),
                     rx.foreach(
-                        items.data,
+                        state_designs.data,
                         lambda item: rx.flex(
                             create_checkbox(
                                 checkbox_id=f"{item.design_id}",
@@ -34,7 +34,7 @@ def designs_selection_section(items, text):
                     ),
                 ),
             ),
-            on_mount=[items.fetch_data],
+            on_mount=[state_designs.fetch_data],
             display="flex",
             flex_direction="column",
             gap="0.5rem",

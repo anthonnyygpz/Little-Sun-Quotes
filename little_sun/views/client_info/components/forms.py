@@ -1,14 +1,10 @@
 import reflex as rx
 
-from ....states.info_client import InfoClientState
-
-from ....states.clients import ClientsAPI
-
 from ....components.forms import create_input
 from ....components.labels import create_label
 
 
-def form_client_switch():
+def form_client_switch(state_clients):
     return rx.form(
         rx.box(
             rx.box(
@@ -18,7 +14,7 @@ def form_client_switch():
                     rx.select.content(
                         rx.select.group(
                             rx.foreach(
-                                ClientsAPI.data,
+                                state_clients.data,
                                 lambda item: rx.select.item(
                                     f"{item.name}",
                                     value=f"{item.name}",
@@ -26,8 +22,8 @@ def form_client_switch():
                             ),
                         ),
                     ),
-                    value=f"{InfoClientState.name_client}",
-                    on_change=InfoClientState.set_name_client,  # type: ignore
+                    value=f"{state_clients.name_client}",
+                    on_change=state_clients.set_name_client,  # type: ignore
                 ),
             ),
             gap="1rem",
@@ -38,14 +34,12 @@ def form_client_switch():
                     "768px": "repeat(2, minmax(0, 1fr))",
                 }
             ),
-            on_mount=lambda: [
-                ClientsAPI.fetch_data,
-            ],
+            on_mount=lambda: [state_clients.fetch_data],
         ),
     )
 
 
-def form_client_input():
+def form_client_input(state_clients):
     return rx.form(
         rx.box(
             rx.box(
@@ -54,8 +48,8 @@ def form_client_input():
                     input_id="clientName",
                     input_name="clientName",
                     input_type="text",
-                    on_blur=InfoClientState.set_name_client,  # type: ignore
-                    text_value=InfoClientState.name_client,
+                    on_blur=state_clients.set_name_client,  # type: ignore
+                    text_value=state_clients.name_client,
                 ),
             ),
             rx.box(
@@ -64,11 +58,11 @@ def form_client_input():
                     input_id="clientNumber",
                     input_name="clientNumber",
                     input_type="text",
-                    on_blur=InfoClientState.set_phone_number,  # type: ignore
-                    text_value=InfoClientState.phone_number,
+                    on_blur=state_clients.set_phone_number,  # type: ignore
+                    text_value=state_clients.phone_number,
                 ),
             ),
-            on_mount=[InfoClientState.on_mount],
+            on_mount=[state_clients.on_mount],
             gap="1rem",
             display="grid",
             grid_template_columns=rx.breakpoints(

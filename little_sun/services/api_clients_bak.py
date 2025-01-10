@@ -1,10 +1,11 @@
-from typing import Optional, TypeVar, Generic, Dict, Any
+from typing import List, Optional, TypeVar, Generic, Dict, Any
 from pydantic import BaseModel
 from datetime import datetime, timedelta
 import httpx
 import asyncio
 import json
 import logging
+from abc import ABC, abstractmethod
 from dataclasses import dataclass
 
 # Configuración de logging
@@ -62,9 +63,7 @@ class Cache:
 
             expires_at = datetime.now() + timedelta(seconds=ttl_seconds)
             self._cache[key] = CacheItem(data=value, expires_at=expires_at)
-            logger.info(
-                f"Cached data for key: {key}, expires in {ttl_seconds} seconds"
-            )
+            logger.info(f"Cached data for key: {key}, expires in {ttl_seconds} seconds")
         except Exception as e:
             logger.error(f"Error caching data: {str(e)}")
 
@@ -74,9 +73,7 @@ class Cache:
 
 
 class DataFetcher:
-    def __init__(
-        self, base_url: str, cache_ttl: int = 3600, timeout: float = 10.0
-    ):
+    def __init__(self, base_url: str, cache_ttl: int = 3600, timeout: float = 10.0):
         self.base_url = base_url
         self.cache = Cache()
         self.cache_ttl = cache_ttl
@@ -92,9 +89,7 @@ class DataFetcher:
     async def __aexit__(self, *args):
         await self._client.aclose()
 
-    def _generate_cache_key(
-        self, endpoint: str, params: Optional[Dict] = None
-    ) -> str:
+    def _generate_cache_key(self, endpoint: str, params: Optional[Dict] = None) -> str:
         """Genera una clave única para el caché basada en el endpoint y parámetros"""
         key = endpoint
         if params:
@@ -104,10 +99,7 @@ class DataFetcher:
         return key
 
     async def fetch_data(
-        self,
-        endpoint: str,
-        params: Optional[Dict] = None,
-        use_cache: bool = True,
+        self, endpoint: str, params: Optional[Dict] = None, use_cache: bool = True
     ) -> DataResponse:
         cache_key = self._generate_cache_key(endpoint, params)
 
@@ -119,9 +111,7 @@ class DataFetcher:
                     data = json.loads(cached_data)
                     return DataResponse(success=True, data=data)
                 except json.JSONDecodeError:
-                    logger.warning(
-                        f"Invalid JSON in cache for key: {cache_key}"
-                    )
+                    logger.warning(f"Invalid JSON in cache for key: {cache_key}")
 
         try:
             # Realizar la petición HTTP
@@ -138,9 +128,7 @@ class DataFetcher:
         except httpx.HTTPError as e:
             error_msg = f"HTTP error occurred: {str(e)}"
             logger.error(error_msg)
-            raise DataFetchError(
-                error_msg, getattr(e.response, "status_code", None)
-            )
+            raise DataFetchError(error_msg, getattr(e.response, "status_code", None))
 
         except Exception as e:
             error_msg = f"Unexpected error: {str(e)}"
@@ -151,23 +139,14 @@ class DataFetcher:
 # Ejemplo de uso con usuarios
 class UserAPI:
     def __init__(self, base_url: str = "http://0.0.0.0:8000/api/"):
-        self.fetcher = DataFetcher(
-            base_url, cache_ttl=1800
-        )  # 30 minutos de caché
+        self.fetcher = DataFetcher(base_url, cache_ttl=1800)  # 30 minutos de caché
 
-    async def get_user(self, user_id: int) -> Dict:
+    async def get_quotes(self) -> Dict:
         async with self.fetcher as fetcher:
             response = await fetcher.fetch_data("get_quotes_data")
-            return response.data
-
-    #
-    # async def get_users(self) -> List[Dict]:
-    #     async with self.fetcher as fetcher:
-    #         response = await fetcher.fetch_data("/users")
-    #         return response.data
+            return response.data  # type: ignore
 
 
-# Ejemplo de uso
 async def main():
     # Crear instancia de UserAPI
     user_api = UserAPI()
@@ -175,19 +154,19 @@ async def main():
     try:
         # Primera llamada - debería hacer petición HTTP
         logger.info("Fetching user 1 (first time)...")
-        user = await user_api.get_user(1)
+        user = await user_api.get_quotes()
         print("User 1 (from HTTP):", user[0]["name"])
 
         # Segunda llamada - debería usar caché
         logger.info("Fetching user 1 (second time)...")
-        user = await user_api.get_user(1)
+        user = await user_api.get_quotes()
         print("User 1 (from cache):", user[0]["name"])
 
         # Obtener todos los usuarios
         # logger.info("Fetching all users...")
         # users = await user_api.get_users()
         # print(f"Total users fetched: {len(users)}")
-        #
+
     except DataFetchError as e:
         print(f"Error: {e.message}")
         if e.status_code:
@@ -196,3 +175,4 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+

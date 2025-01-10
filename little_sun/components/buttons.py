@@ -1,11 +1,6 @@
 import reflex as rx
 
-from little_sun.states.nail_services import NailServices
-from little_sun.states.nail_sizes import NailSizes
 from little_sun.utils.constants import Colors
-from ..states.info_client import InfoClientState
-
-from little_sun.states.state import State
 
 
 def create_button(text, on_clicked):
@@ -29,7 +24,7 @@ def create_button(text, on_clicked):
     )
 
 
-def generate_quote_button():
+def generate_quote_button(state_state, form_data, url_redirect=""):
     """Create a button for generating a quote."""
     return rx.el.button(
         " Generar cita ",
@@ -48,16 +43,8 @@ def generate_quote_button():
         border_radius="0.375rem",
         color="#ffffff",
         on_click=lambda: [
-            State.upload_data(
-                {
-                    "size": NailSizes.id_type_escultural,
-                    "service": NailServices.items,
-                    "name_client": InfoClientState.name_client,
-                    "phone_number": InfoClientState.phone_number,
-                    "total_price": NailServices.total_price,
-                }
-            ),
-            rx.redirect("http://localhost:3000/"),
+            state_state.upload_data(form_data),
+            rx.redirect(url_redirect),
         ],
     )
 
@@ -83,7 +70,7 @@ def create_save_quote_button():
     )
 
 
-def create_clean_quote_button():
+def clean_quote_button(state_services):
     """Create a button for saving a quote."""
     return rx.el.button(
         " Borrar presupuesto ",
@@ -101,7 +88,7 @@ def create_clean_quote_button():
         padding_bottom="0.5rem",
         border_radius="0.375rem",
         color="#1F2937",
-        on_click=[NailServices.delete, NailSizes.delete],
+        on_click=[state_services.delete, state_services.delete],
     )
 
 

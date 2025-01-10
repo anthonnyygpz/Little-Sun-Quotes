@@ -1,29 +1,19 @@
 import reflex as rx
-
-from little_sun.states.info_client import InfoClientState
-from little_sun.states.nail_services import NailServices
-from little_sun.states.nail_sizes import NailSizes
-
-
 from ...components.labels import create_heading
 from ...components.pricing import create_price_row
 
-from ...states.state import State
 
-
-def quote_summary_section():
+def quote_summary_section(state_clients, state_nail_sizes, state_services, state_state):
     """Create the quote summary section."""
     return rx.box(
         create_heading(text="Resumen de la cita"),
         rx.box(
+            create_heading(text=f"Nombre del cliente: {state_clients.name_client}"),
             create_heading(
-                text=f"Nombre del cliente: {InfoClientState.name_client}"
-            ),
-            create_heading(
-                text=f"Tipo de escultura usado: {NailSizes.type_escultural}"
+                text=f"Tipo de escultura usado: {state_nail_sizes.type_escultural}"
             ),
             rx.foreach(
-                NailServices.items,
+                state_services.items,
                 lambda item: create_price_row(
                     label_text=item.name, price=item.price, color="green"
                 ),
@@ -31,7 +21,7 @@ def quote_summary_section():
             rx.divider(),
             create_price_row(
                 label_text="Total:",
-                price=NailServices.total_price,
+                price=state_services.total_price,
                 font_weight="600",
             ),
             # create_price_row(label_text="Tax (10%):", price=0.00),
@@ -43,9 +33,9 @@ def quote_summary_section():
             #     justify_content="space-between",
             # ),
             on_mount=lambda: [
-                NailSizes.on_mount,
-                NailServices.on_mount,
-                State.on_mount,
+                state_nail_sizes.on_mount,
+                state_services.on_mount,
+                state_state.on_mount,
             ],
             display="flex",
             flex_direction="column",

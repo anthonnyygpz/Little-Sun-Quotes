@@ -7,19 +7,19 @@ from ...components.labels import create_heading
 from ...utils.constants import Colors
 
 
-def services_selection_section(items, mount, text):
+def services_selection_section(state_services, label_text):
     """Create the services selection section of the form."""
     return rx.box(
-        create_heading(text),
+        create_heading(label_text),
         rx.box(
             rx.cond(
-                items.loading == False,
+                state_services.loading,
                 rx.spinner(),
                 rx.cond(
-                    items.error != "",
-                    rx.text(items.error, color=Colors.error),
+                    state_services.error != "",
+                    rx.text(state_services.error, color=Colors.error),
                     rx.foreach(
-                        items.data,
+                        state_services.data,
                         lambda item: rx.flex(
                             create_checkbox(
                                 checkbox_id=f"{item.service_id}",
@@ -34,7 +34,7 @@ def services_selection_section(items, mount, text):
                     ),
                 ),
             ),
-            on_mount=[items.fetch_data, mount.on_mount],
+            on_mount=[state_services.fetch_data],
             display="flex",
             flex_direction="column",
             gap="0.5rem",

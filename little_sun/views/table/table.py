@@ -1,9 +1,10 @@
 import reflex as rx
 
 from little_sun.states.crud_dashboard import CRUDDashboard
+from little_sun.states.nail_services import ServicesApi, ServicesState
 from little_sun.utils.constants import Colors
 
-from ...backend.backend import State
+# from ...backend.backend_table import Customer, State
 from ...components.form_field import form_field
 
 from ...components.status_badges import status_badge
@@ -31,17 +32,21 @@ def show_client(user):
         rx.table.cell(
             rx.hstack(
                 # Fuera de servicio
-                # update_customer_dialog(user),
+                update_customer_dialog(user),
                 rx.icon_button(
                     rx.icon("trash-2", size=22),
-                    on_click=lambda: CRUDDashboard.delete_quotes(user.quote_id),
+                    on_click=lambda: [
+                        CRUDDashboard.delete_quotes(user.quote_id),
+                        rx.toast(CRUDDashboard.successfully_delete),
+                        CRUDDashboard.view_quotes,
+                    ],
                     size="2",
                     variant="solid",
                     color_scheme="red",
                 ),
             )
         ),
-        on_mount=CRUDDashboard.view_quotes,
+        on_mount=lambda: [CRUDDashboard.view_quotes],
         style={"_hover": {"bg": rx.color("gray", 3)}},  # type: ignore
         align="center",
     )
@@ -117,14 +122,28 @@ def update_customer_dialog(user):
                             "ruler",
                             f"{user.size_name}",
                         ),
-                        # Services
-                        form_field(
-                            "Servicio",
-                            "Servicio",
-                            "text",
-                            "services",
-                            "hand",
-                            f"{user.services}",
+                        rx.foreach(
+                            ServicesState.data,
+                            lambda item: rx.checkbox(
+                                item.service_name,
+                                default_checked=False,
+                                name=f"{item.service_id}",
+                                value=f"{item.service_name}",
+                                # on_click=CRUDDashboard.add(item.service_id),
+                                on_change=CRUDDashboard.add_is_true,
+                            ),
+                        ),
+                        rx.text.span(
+                            # Services
+                            form_field(
+                                "Servicio",
+                                "Servicio",
+                                "text",
+                                "services",
+                                "hand",
+                                f"{CRUDDashboard.add_services}",
+                            ),
+                            rx.text(f"Default: {user.services}", size="1"),
                         ),
                         # Designs
                         form_field(
@@ -179,6 +198,7 @@ def update_customer_dialog(user):
                                 required=True,
                             ),
                         ),
+                        on_mount=ServicesState.fetch_data,
                         direction="column",
                         spacing="3",
                     ),
@@ -201,7 +221,8 @@ def update_customer_dialog(user):
                         mt="4",
                         justify="end",
                     ),
-                    on_submit=CRUDDashboard.update_quotes,
+                    on_mount=CRUDDashboard.on_mount,
+                    on_submit=[CRUDDashboard.update_quotes],
                     reset_on_submit=False,
                 ),
                 width="100%",
@@ -297,6 +318,6 @@ def main_table():
             variant="surface",
             size="3",
             width="100%",
-            on_mount=State.load_entries,
+            # on_mount=State.load_entries,
         ),
     )

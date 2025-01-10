@@ -1,8 +1,7 @@
 import reflex as rx
 
+from little_sun.states.nail_services import ServicesState
 from little_sun.utils.constants import Colors
-
-from ..states.nail_services import NailServices
 
 
 def create_input(input_id, input_name, input_type, on_blur, text_value):
@@ -36,11 +35,9 @@ def create_checkbox(checkbox_id, checkbox_name, price, category):
             checkbox_name,
             id=checkbox_id,
             # name=checkbox_name,
-            checked=NailServices.is_checked[checkbox_name],
+            checked=ServicesState.is_checked[checkbox_name],
             on_click=lambda: [
-                NailServices.toggle_item(
-                    checkbox_name, price, checkbox_id, category
-                ),
+                ServicesState.toggle_item(checkbox_name, price, checkbox_id, category),
             ],
             variant="surface",
             color_scheme="purple",

@@ -1,40 +1,33 @@
 from typing import Dict, List
 import reflex as rx
-import httpx
+from little_sun.services.api_clients import logger, DataFetchError, DataFetcher
 
 
-class DesignsAPI(rx.State):
+class DesingsAPI:
+    def __init__(self, base_url: str = "http://0.0.0.0:8000"):
+        self.fetcher = DataFetcher(base_url, cache_ttl=1800)
+        self.list_endpoint = "/api/get_design"
+        self.delete_endpoint = "/api/delete_quote"
+
+    async def get_quotes(self) -> List[Dict]:
+        async with self.fetcher as fetcher:
+            response = await fetcher.fetch_data(self.list_endpoint)
+            return response.data  # type: ignore
+
+
+class DesignsState(rx.State):
     data: List[Dict] = []
-    error: str = ""
     loading: bool = False
+    error: str = ""
 
     async def fetch_data(self):
         self.loading = True
+        api = DesingsAPI()
         try:
-            async with httpx.AsyncClient() as client:
-                response = await client.get(
-                    "http://0.0.0.0:8000/api/get_design"
-                )
-                response.raise_for_status()
-                self.data = response.json()
-        except Exception as e:
-            self.error = f"Error fetching data: {str(e)}"
-        finally:
-            self.loading = False
-
-
-class DesignsAPIPost:
-    async def post_data(self, parameter):
-        self.loading = True
-        try:
-            async with httpx.AsyncClient() as client:
-                response = await client.post(
-                    "http://0.0.0.0:8000/api/register_clients",
-                    json=parameter,
-                )
-                response.raise_for_status()
-                self.data = response.json()
-        except Exception as e:
-            self.error = f"Error fetching data: {str(e)}"
+            logger.info("Fetching user 1 (second time)...")
+            desings = await api.get_quotes()
+            self.data = desings
+        except DataFetchError as he:
+            self.error = f"{str(he)}"
         finally:
             self.loading = False

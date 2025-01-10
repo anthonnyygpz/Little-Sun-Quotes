@@ -8,4 +8,4 @@ class ClientBase(BaseModel):
 
 class CreateClientsSchema(BaseModel):
     name: str
-    phone_number: Optional[str]
+    phone_number: Optional[int]

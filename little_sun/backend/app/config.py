@@ -3,7 +3,7 @@ from functools import lru_cache
 
 
 class Settings(BaseSettings):
-    DATABASE_URL: str = "sqlite:///sqlite.db"
+    DATABASE_URL: str = "sqlite:///reflex.db"
     PROJECT_NAME: str = "little_sun"
 
 

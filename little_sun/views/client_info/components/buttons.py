@@ -1,16 +1,15 @@
 import reflex as rx
-from ....states.info_client import InfoClientState
 
 
-def switch_selection():
+def switch_selection(state_clients):
     return (
         rx.box(
             rx.text("Seleccionar registrar/existente"),
             rx.switch(
-                checked=InfoClientState.register_or_exist,
+                checked=state_clients.register_or_exist,
                 on_change=[
-                    InfoClientState.change_cheked,
-                    InfoClientState.switch,
+                    state_clients.change_cheked,
+                    state_clients.switch,
                 ],
             ),
         ),
