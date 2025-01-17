@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List, Optional
 from pydantic import BaseModel
 
 
@@ -12,5 +12,13 @@ class CreateQuotesSchema(QuotesBase):
     total_amount: Optional[int]
 
 
-class UpdateQuotesSchema(QuotesBase):
-    pass
+class UpdateQuoteSchema(QuotesBase):
+    quote_id: int
+    client_id: int
+    name: str
+    phone_number: int
+    nail_size_id: int
+    total_amount: int
+    status: str
+    designs: List[int]
+    services: List[int]

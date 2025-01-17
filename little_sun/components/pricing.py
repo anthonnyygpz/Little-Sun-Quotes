@@ -1,5 +1,7 @@
 import reflex as rx
 
+from little_sun.repositories.designs import DesignsState
+
 
 def create_price_span(price_text):
     """Create a span element for displaying prices."""
@@ -13,7 +15,7 @@ def create_price_span(price_text):
     )
 
 
-def create_price_row(label_text, price, color= None, font_weight=None):
+def create_price_row(label_text, price, color=None, font_weight=None):
     """Create a row displaying a price label and amount."""
     return rx.text(
         rx.text.span(label_text),
@@ -21,5 +23,5 @@ def create_price_row(label_text, price, color= None, font_weight=None):
         display="flex",
         justify_content="space-between",
         font_weight=font_weight,
-        color_scheme=color
+        color_scheme=color,
     )

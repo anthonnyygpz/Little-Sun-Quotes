@@ -1,7 +1,7 @@
-"""Welcome to Reflex! This file outlines the steps to create a basic app."""
-
+from fastapi.middleware.cors import CORSMiddleware
 import reflex as rx
 
+from little_sun.pages.dashboard import dashboard
 from little_sun.pages.quote_generator import quote_generator
 
 from .backend.app.routers import (
@@ -14,9 +14,6 @@ from .backend.app.routers import (
     quote_designs,
     quote_services,
 )
-from fastapi.middleware.cors import CORSMiddleware
-from .test.test import test
-from .pages.crud_dashboard import crud_dashboard
 
 # Initalization
 app = rx.App(
@@ -25,9 +22,8 @@ app = rx.App(
         has_background=True,
         radius="large",
         accent_color="grass",
-    ),
+    )
 )
-
 
 app.api.add_middleware(
     CORSMiddleware,
@@ -37,7 +33,7 @@ app.api.add_middleware(
     allow_headers=["*"],
 )
 
-# APIs
+# # APIs
 app.api.include_router(services.router)
 app.api.include_router(designs.router)
 app.api.include_router(nail_sizes.router)
@@ -48,6 +44,13 @@ app.api.include_router(quote_designs.router)
 app.api.include_router(quote_services.router)
 
 # Routers reflex
-app.add_page(quote_generator, route="/quote")
-app.add_page(crud_dashboard, route="/")
-app.add_page(test, route="/test")
+app.add_page(quote_generator, route="/quote/[method]/[quote_id]/[id_client]")
+app.add_page(dashboard, route="/")
+# app.add_page(test, route="/test")
+
+# from little_sun.pages.quote_generator import quote_generator
+#
+# from fastapi.middleware.cors import CORSMiddleware
+# from .test.test import test
+# from .pages.crud_dashboard import crud_dashboard
+#
