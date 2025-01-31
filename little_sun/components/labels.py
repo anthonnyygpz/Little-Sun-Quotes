@@ -1,7 +1,7 @@
 import reflex as rx
 
 
-def create_label(label_text):
+def label(label_text):
     """Create a label element with specific styling."""
     return rx.el.label(
         label_text,
@@ -26,13 +26,22 @@ def create_label(label_text):
 #     )
 #
 
-def create_heading(text):
+
+def heading(
+    text: str,
+    font_weight="600",
+    margin_bottom="1rem",
+    font_size="1.25rem",
+    line_height="1.75rem",
+    color=None,
+):
     """Create a heading element with specific styling."""
     return rx.heading(
         text,
-        font_weight="600",
-        margin_bottom="1rem",
-        font_size="1.25rem",
-        line_height="1.75rem",
+        font_weight=font_weight,
+        margin_bottom=margin_bottom,
+        font_size=font_size,
+        line_height=line_height,
+        color_scheme=color,  # type: ignore
         as_="h2",
     )

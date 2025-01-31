@@ -9,7 +9,7 @@ class AllAppoiments(rx.State):
     async def all_appoiments(self):
         try:
             async with httpx.AsyncClient() as client:
-                response = await client.get("http://0.0.0.0:8000/api/get_quotes_data")
+                response = await client.get("http://0.0.0.0:8000/api_v1/quotes/all")
                 response.raise_for_status()
                 self.data = response.json()
 

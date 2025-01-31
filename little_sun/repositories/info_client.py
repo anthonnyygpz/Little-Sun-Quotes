@@ -9,21 +9,27 @@ class ClientsState(rx.State):
     is_exists: bool = False
 
     data: List[Dict] = []
-
-    async def all_client_info(self):
-        async with httpx.AsyncClient() as client:
-            response = await client.get("http://0.0.0.0:8000/api/get_clients")
-            response.raise_for_status()
-            self.data = response.json()
+    error: str = ""
 
     def reset_all(self):
         self.name_client = ""
         self.phone_number = 0
         self.is_exists = False
+        self.error = ""
 
     def reset_switch(self):
         self.name_client = ""
         self.phone_number = 0
+
+    async def all_client_info(self):
+        async with httpx.AsyncClient() as client:
+            try:
+                response = await client.get("http://0.0.0.0:8000/api_v1/clients/all")
+
+                response.raise_for_status()
+                self.data = response.json()
+            except Exception:
+                self.error = "El recurso solicitado no se encontró"
 
     @rx.event
     def change_existence_status(self, status: bool):

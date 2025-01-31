@@ -9,6 +9,7 @@ class ServicesState(rx.State):
     total_price: int
 
     data: List[Dict] = []
+    error: str = ""
     all_checked: List = []
     is_checked: Dict[str, bool] = {
         checkbox_name: False for checkbox_name in all_checked
@@ -18,12 +19,16 @@ class ServicesState(rx.State):
         self.service_selected = []
         self.selected = []
         self.total_price = 0
+        self.error = ""
 
     async def all_services(self):
         async with httpx.AsyncClient() as client:
-            response = await client.get("http://0.0.0.0:8000/api/get_nail_services")
-            response.raise_for_status()
-            self.data = response.json()
+            try:
+                response = await client.get("http://0.0.0.0:8000/api_v1/services/")
+                response.raise_for_status()
+                self.data = response.json()
+            except Exception:
+                self.error = "El recurso solicitado no se encontró"
 
     @rx.event
     def toggle_item(self, name: str, price: int, id: int):

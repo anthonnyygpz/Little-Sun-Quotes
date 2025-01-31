@@ -6,7 +6,7 @@ import reflex as rx
 from little_sun.repositories.services import ServicesState
 
 
-def create_input(input_id, input_name, input_type, on_blur, text_value):
+def input_text(input_id, input_name, input_type, on_blur, text_value):
     """Create an input element with specific styling and attributes."""
     return rx.el.input(
         id=input_id,

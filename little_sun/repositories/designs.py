@@ -9,6 +9,7 @@ class DesignsState(rx.State):
     total_price: int = 0
 
     data: List[Dict] = []
+    error: str = ""
     all_checked: List = []
     is_checked: Dict[str, bool] = {
         checkbox_name: False for checkbox_name in all_checked
@@ -18,12 +19,16 @@ class DesignsState(rx.State):
         self.design_selected = []
         self.total_price = 0
         self.all_checked = []
+        self.error = ""
 
     async def all_designs(self):
         async with httpx.AsyncClient() as client:
-            response = await client.get("http://0.0.0.0:8000/api/get_design")
-            response.raise_for_status()
-            self.data = response.json()
+            try:
+                response = await client.get("http://0.0.0.0:8000/api_v1/designs/")
+                response.raise_for_status()
+                self.data = response.json()
+            except Exception:
+                self.error = "El recurso solicitado no se encontró"
 
     @rx.event
     def toggle_item(self, name: str, price: int, id: int):

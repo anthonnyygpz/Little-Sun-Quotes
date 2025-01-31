@@ -10,7 +10,7 @@ class DeleteQuote(rx.State):
         try:
             async with httpx.AsyncClient() as client:
                 respose = await client.delete(
-                    f"http://0.0.0.0:8000/api/delete_quote?quote_id={quote_id}"
+                    f"http://0.0.0.0:8000/api_v1/quotes/delete?quote_id={quote_id}"
                 )
                 if respose:
                     self.success = "Se borro correctamente"
